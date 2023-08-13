@@ -69,7 +69,6 @@ def image_from_file(path, mode='RGB', err_raise=True, print_info=True):
             print(f'Error: {e}\n')
 
 
-
 def images_from_folder():
     """Us threads to import images from a folder."""
 
