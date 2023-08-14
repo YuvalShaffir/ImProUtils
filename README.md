@@ -1,15 +1,13 @@
 # ImProUtils
 
+Author
+Yuval Shaffir
+
+
 
 # ImProUtils.image.image
 Description
 ImProUtils.image.image is a module containing a set of useful functions for simple image importation. It provides methods to import images from files, folders, URLs, and even create images from 1D arrays.
-
-Author
-Yuval Shaffir
-
-Date
-13/08/2023
 
 Accepted File Types
 The module supports importing images with the following file formats:
@@ -33,10 +31,10 @@ HSV: 3x8-bit pixels, Hue, Saturation, Value color space
 I: 32-bit signed integer pixels
 F: 32-bit floating point pixels
 
-Functions
-image_from_file
-images_from_folder
-img_from_1d_array
-img_from_url
+Functions:
+- image_from_file
+- images_from_folder
+- img_from_1d_array
+- img_from_url
 
 These functions offer convenient ways to import images from various sources and manipulate them in different modes. Please refer to the function descriptions for details on their usage.
