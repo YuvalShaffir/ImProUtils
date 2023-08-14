@@ -4,7 +4,7 @@ ImProUtils.image.image
 
 Description:
 ------------
-Useful functions simple image importation.
+Useful functions for simple image importation.
 
 Author:
 -------
@@ -118,12 +118,21 @@ def img_from_1d_array(arr, cols):
 
 def img_from_url(link, mode='RGB', err_raise=True, print_info=True):
     """
-    Import an image from a url.
-    :param link:
-    :param mode:
-    :param err_raise:
-    :param print_info:
-    :return:
+    Import an image from url.
+    :param link: link to image.
+    :param mode: mode of image.
+    :param err_raise: if True, raise an error if the file is not found.
+    :param print_info: if True, print info about the progress.
+    :return: matrix of image.
     """
-    urllib.request.urlretrieve(link, 'temp.jpg')
+    # check if link exists
+    if not link:
+        raise FileNotFoundError(f'Link: {link} not found!\n')
+    try:
+        urllib.request.urlretrieve(link, 'temp.jpg')
+    except Exception as e:
+        if err_raise:
+            print(f'Error: {e}\n')
+
     return image_from_file('temp.jpg', mode, err_raise, print_info)
+
