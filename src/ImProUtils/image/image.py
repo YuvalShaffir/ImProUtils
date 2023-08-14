@@ -69,14 +69,34 @@ def image_from_file(path, mode='RGB', err_raise=True, print_info=True):
             print(f'Error: {e}\n')
 
 
-def images_from_folder():
+def images_from_folder(path, mode='RGB', err_raise=True, print_info=True):
     """Us threads to import images from a folder."""
+    # check if folder exists
+    path = os.path.abspath(path)
+    if not path:
+        raise FileNotFoundError(f'Path: {path} not found!\n')
 
-    pass
+    lst = []
+    if print_info:
+        print(f'Importing images from folder: {path}\n')
+
+    for i in tqdm(os.listdir(path)):
+        lst.append(image_from_file(path + i, mode, err_raise, False))
+
+    if print_info:
+        print(f'Importing Success!\n')
+
+    return lst
 
 
-def img_from_array():
-    pass
+def img_from_1d_array(arr):
+    """
+    Create an 2D matrix representing an image from a 1D array.
+
+    :param arr: 1D array of pixels.
+    :return: matrix (image).
+    """
+    for i in range(len(arr) // )
 
 
 def img_from_url():
