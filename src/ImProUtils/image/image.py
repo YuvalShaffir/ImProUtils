@@ -44,6 +44,11 @@ from PIL import Image
 import numpy as np
 import urllib.request
 
+SUCCESS_MSG = 'Importing Success!\n'
+ARRAY_IS_NULL_ERR = 'Array is null!\n'
+POSITIVE_VAL_ERR = 'Number of columns must be positive!\n'
+MUST_BE_LIST_ERR = 'Array must be a list!\n'
+
 
 def image_from_file(path, mode='RGB', err_raise=True, print_info=True):
     """
@@ -63,7 +68,7 @@ def image_from_file(path, mode='RGB', err_raise=True, print_info=True):
 
     with Image.open(path) as img:
         if print_info:
-            print(f'Importing Success!\n')
+            print(SUCCESS_MSG)
         img = img.convert(mode)
         img = np.array(img)
         return img
@@ -93,7 +98,7 @@ def images_from_folder(path, mode='RGB', err_raise=True, print_info=True):
         except FileNotFoundError:
             print(f"File not found! path: {path + i} \n")
     if print_info:
-        print(f'Importing Success!\n')
+        print(SUCCESS_MSG)
 
     return lst
 
@@ -108,11 +113,11 @@ def img_from_1d_array(arr, cols):
     """
     # validate input
     if not arr:
-        raise ValueError(f'Array is null!\n')
+        raise ValueError(ARRAY_IS_NULL_ERR)
     if cols < 1:
-        raise ValueError(f'Number of columns must be positive!\n')
+        raise ValueError(POSITIVE_VAL_ERR)
     if not isinstance(arr, list):
-        raise TypeError(f'Array must be a list!\n')
+        raise TypeError(MUST_BE_LIST_ERR)
 
     # reshape array into a matrix with the given number of columns
     return np.reshape(arr, (-1, cols))
