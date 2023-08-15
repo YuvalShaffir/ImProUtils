@@ -1,5 +1,5 @@
 
-def detect():
+def canny():
 
     # gaussian blur
 
@@ -12,5 +12,13 @@ def detect():
     # non-maximum suppression
 
     # hysteresis thresholding
-    
+
+    pass
+
+
+def harris():
+    pass
+
+
+def sift():
     pass

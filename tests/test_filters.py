@@ -45,3 +45,13 @@ class TestGaussianFilter(unittest.TestCase):
     def test_negative_kernel_size(self):
         with self.assertRaises(ValueError):
             ImProFilters.gaussian_kernel2d(-1, 1)
+
+
+class TestDerivitives(unittest.TestCase):
+    def test_sobel_x_derivative(self):
+        pass
+
+    def test_sobel_y_derivative(self):
+        pass
+
+

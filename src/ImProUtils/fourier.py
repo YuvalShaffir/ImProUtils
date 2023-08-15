@@ -1,8 +1,8 @@
 
-def transform():
+def DFT():
     pass
 
 
-def invert():
+def IDFT():
     pass
 
