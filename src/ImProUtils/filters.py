@@ -54,12 +54,18 @@ def gaussian_kernel2d(kernel_size, sigma):
 
 def sobel_x_derivative(img):
     """Returns the x derivative of the image using the 3x3 sobel operator."""
+    # grayscale the image
+    gray_img = ndimage.convert(img, 'L')
+
     sobel_x = np.outer(np.array([1, 2, 1]), np.array([1, 0, -1]))
     return ndimage.convolve(sobel_x, img)
 
 
 def sobel_y_derivative(img):
     """Returns the y derivative of the image using the 3x3 sobel operator."""
+    # grayscale the image
+    gray_img = ndimage.convert(img, 'L')
+
     sobel_y = np.outer(np.array([1, 2, 1]), np.array([1, 0, -1])).T
     return ndimage.convolve(sobel_y, img)
 
@@ -104,6 +110,7 @@ def non_maximum_suppression(grad_matrix, phase_matrix, locality_size):
 
                 # 45 degrees - diagonal edge
                 case 45:
+                    # todo: fix this case
                     if grad_matrix[i][j] >= np.argmax(np.diagonal(grad_matrix):
                         local_max = grad_matrix[i][j]
                         grad_matrix[i - locality_size: i + locality_size][j] = 0
@@ -125,6 +132,7 @@ def non_maximum_suppression(grad_matrix, phase_matrix, locality_size):
 
                 # 135 degrees - diagonal edge
                 case 135:
+                    # todo: start coding this case
                     break
 
 
