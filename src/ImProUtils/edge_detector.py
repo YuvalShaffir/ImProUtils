@@ -22,17 +22,18 @@ def canny(img, low_threshold, high_threshold, kernel_size, sigma=1):
     sobel_y = filters.sobel_y_derivative(blurred_img)
 
     # gradient magnitude and direction matrix
-    grad_mag = filters.gradient_magnitude(sobel_x, sobel_y)
-    grad_dir = filters.gradient_direction(sobel_x, sobel_y)
-    quantized_dir = filters.direction_quantization(grad_dir)
+    grad_mag_mat = filters.gradient_magnitude(sobel_x, sobel_y)
+    grad_dir_mat = filters.gradient_direction(sobel_x, sobel_y)
+    quantized_dir_mat = filters.direction_quantization(grad_dir_mat)
 
     # non-maximum suppression
-    non_max_sup = filters.non_maximum_suppression(grad_mag, quantized_dir, 3)
+    suppressed_matrix = filters.non_maximum_suppression(grad_mag_mat, quantized_dir_mat)
 
     # hysteresis thresholding
-    edges = filters.hysteresis_thresholding(non_max_sup, low_threshold, high_threshold)
+    edges = filters.hysteresis_thresholding(suppressed_matrix, low_threshold, high_threshold)
 
     return edges
+
 
 def harris():
     pass

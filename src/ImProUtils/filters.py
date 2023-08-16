@@ -122,7 +122,7 @@ def non_maximum_suppression(grad_matrix, phase_matrix):
     return suppressed_matrix
 
 
-def hysteresis_thresholding(suppressed_matrix, low_val, high_val, window_size):
+def hysteresis_thresholding(suppressed_matrix, low_val, high_val):
     """Returns the hysteresis thresholding of the image using the low and high thresholds.
     :param suppressed_matrix: the matrix after non-maximum suppression
     :param low_val: the low threshold
