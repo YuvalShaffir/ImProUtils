@@ -27,13 +27,12 @@ def canny(img, low_threshold, high_threshold, kernel_size, sigma=1):
     quantized_dir = filters.direction_quantization(grad_dir)
 
     # non-maximum suppression
-    non_max_sup = non_maximum_suppression(grad_mag, quantized_dir, 3)
+    non_max_sup = filters.non_maximum_suppression(grad_mag, quantized_dir, 3)
 
     # hysteresis thresholding
-    hysteresis = hysteresis_thresholding(non_max_sup, low_threshold, high_threshold)
+    edges = filters.hysteresis_thresholding(non_max_sup, low_threshold, high_threshold)
 
-    pass
-
+    return edges
 
 def harris():
     pass
