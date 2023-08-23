@@ -150,6 +150,7 @@ def hysteresis_thresholding(suppressed_matrix, low_val, high_val):
 
     return edges
 
+
 def laplacian(img):
     """
     convolve the image with a laplacian kernel
