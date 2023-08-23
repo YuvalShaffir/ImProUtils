@@ -150,6 +150,15 @@ def hysteresis_thresholding(suppressed_matrix, low_val, high_val):
 
     return edges
 
-def laplacian():
-    pass
+def laplacian(img):
+    """
+    convolve the image with a laplacian kernel
+    :param img: a grayscale image
+    :return: the image after the convolution with the laplacian kernel
+    """
+    # validate that the image is grayscale
+    if len(img.shape) != 2:
+        raise ValueError(GRAYSCALE_ERR)
 
+    kernel = np.array([[0, -1, 0], [-1, 5, -1], [0, -1, 0]])
+    return ndimage.convolve(img, kernel)
