@@ -20,7 +20,7 @@ import numpy as np
 import scipy.ndimage as ndimage
 
 SAME_SHAPE_ERR = 'Arguments must have the same shape'
-
+GRAYSCALE_ERR = 'Image must be grayscale'
 LOW_IS_BIGGER_THAN_HIGH_ERR = 'low threshold must be smaller than high threshold'
 POSITIVE_THRESHOLD_ERR = 'thresholds must be positive'
 POSITIVE_KERNEL_ERR = 'sigma must be positive'
@@ -156,9 +156,8 @@ def laplacian(img):
     :param img: a grayscale image
     :return: the image after the convolution with the laplacian kernel
     """
-    # validate that the image is grayscale
-    if len(img.shape) != 2:
-        raise ValueError(GRAYSCALE_ERR)
+    # grayscale the image
+    gray_img = ndimage.convert(img, 'L')
 
     kernel = np.array([[0, -1, 0], [-1, 5, -1], [0, -1, 0]])
-    return ndimage.convolve(img, kernel)
+    return ndimage.convolve(gray_img, kernel)
