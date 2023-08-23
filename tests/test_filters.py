@@ -49,7 +49,11 @@ class TestGaussianFilter(unittest.TestCase):
 
 class TestDerivitives(unittest.TestCase):
     def test_sobel_x_derivative(self):
-        pass
+        res = ImProFilters.sobel_x_derivative(Image.open('test_images/lena.png'))
+        # check if all values are in range [-255, 255]:
+        self.assertTrue(np.all(res >= -255) and np.all(res <= 255))
+
+
 
     def test_sobel_y_derivative(self):
         pass
