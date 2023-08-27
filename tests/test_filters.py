@@ -47,13 +47,13 @@ class TestGaussianFilter(unittest.TestCase):
             ImProFilters.gaussian_kernel2d(-1, 1)
 
 
-class TestDerivitives(unittest.TestCase):
-    def test_sobel_x_derivative(self):
-        res = ImProFilters.sobel_x_derivative(Image.open('test_images/lena.png'))
+class TestSobel(unittest.TestCase):
+    def test_correct_sobel_range(self):
+        res_x = ImProFilters.sobel_x_derivative(Image.open('test_images/pizza_pixel_art.jpg'))
+        res_y = ImProFilters.sobel_y_derivative(Image.open('test_images/pizza_pixel_art.jpg'))
         # check if all values are in range [-255, 255]:
-        self.assertTrue(np.all(res >= -255) and np.all(res <= 255))
-
-
+        self.assertTrue(np.all(res_x >= -255) and np.all(res_x <= 255))
+        self.assertTrue(np.all(res_y >= -255) and np.all(res_y <= 255))
 
     def test_sobel_y_derivative(self):
         pass
