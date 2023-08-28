@@ -43,6 +43,7 @@ from tqdm import tqdm
 from PIL import Image
 import numpy as np
 import urllib.request
+from skimage import color
 
 SUCCESS_MSG = 'Importing Success!\n'
 ARRAY_IS_NULL_ERR = 'Array is null!\n'
@@ -69,8 +70,9 @@ def image_from_file(path, mode='RGB', err_raise=True, print_info=True):
     with Image.open(path) as img:
         if print_info:
             print(SUCCESS_MSG)
-        img = img.convert(mode)
         img = np.array(img)
+        if len(img.shape) == 3:
+            img = color.rgb2gray(img)
         return img
 
 

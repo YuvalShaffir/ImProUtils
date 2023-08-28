@@ -18,6 +18,9 @@ Date:
 
 import numpy as np
 import scipy.ndimage as ndimage
+import scipy.signal as signal
+from skimage import color
+
 
 SAME_SHAPE_ERR = 'Arguments must have the same shape'
 GRAYSCALE_ERR = 'Image must be grayscale'
@@ -55,19 +58,23 @@ def gaussian_kernel2d(kernel_size, sigma):
 def sobel_x_derivative(img):
     """Returns the x derivative of the image using the 3x3 sobel operator."""
     # grayscale the image
-    gray_img = ndimage.convert(img, 'L')
+    if len(img.shape) == 3:
+        img = color.rgb2gray(img)
 
-    sobel_x = np.outer(np.array([1, 2, 1]), np.array([1, 0, -1]))
-    return ndimage.convolve(sobel_x, img)
+    sobel_x_kernel = np.outer(np.array([1, 2, 1]), np.array([1, 0, -1]))
+    sobel_x = signal.convolve(sobel_x_kernel, img, mode='full').astype(np.float8)
+    return sobel_x
 
 
 def sobel_y_derivative(img):
     """Returns the y derivative of the image using the 3x3 sobel operator."""
     # grayscale the image
-    gray_img = ndimage.convert(img, 'L')
+    if len(img.shape) == 3:
+        img = color.rgb2gray(img)
 
-    sobel_y = np.outer(np.array([1, 2, 1]), np.array([1, 0, -1])).T
-    return ndimage.convolve(sobel_y, img)
+    sobel_y_kernel = np.outer(np.array([1, 2, 1]), np.array([1, 0, -1])).T
+    sobel_y = signal.convolve(sobel_y_kernel, img, mode='full')
+    return sobel_y
 
 
 def gradient_magnitude(grad_x, grad_y):
@@ -160,7 +167,8 @@ def laplacian(img):
     :return: the image after the convolution with the laplacian kernel
     """
     # grayscale the image
-    gray_img = ndimage.convert(img, 'L')
+    if len(img.shape) == 3:
+        img = color.rgb2gray(img)
 
     kernel = np.array([[0, -1, 0], [-1, 5, -1], [0, -1, 0]])
-    return ndimage.convolve(gray_img, kernel)
+    return ndimage.convolve(img, kernel)

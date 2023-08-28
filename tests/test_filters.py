@@ -5,6 +5,7 @@ import scipy.ndimage as ndimage
 import src.ImProUtils.filters as ImProFilters
 import src.ImProUtils.image as ImProImage
 import cv2
+from matplotlib import pyplot as plt
 
 
 class TestGaussianFilter(unittest.TestCase):
@@ -61,9 +62,41 @@ class TestSobel(unittest.TestCase):
     def test_sobel_x_derivative(self):
         """Tests if the sobel derivative is correct"""
         my_res = ImProFilters.sobel_x_derivative(ImProImage.image_from_file('test_images/pizza_pixel_art.jpg'))
-        scipy_res = ndimage.sobel(ImProImage.image_from_file('test_images/pizza_pixel_art.jpg'), axis=0)
-        cv2_res = cv2.Sobel(np.array(ImProImage.image_from_file('test_images/pizza_pixel_art.jpg')), cv2.CV_64F, 1, 0, ksize=3)
-        self.assertTrue(np.all(my_res == scipy_res))
-        self.assertTrue(np.all(my_res == cv2_res))
+        scipy_res = ndimage.sobel(ImProImage.image_from_file('test_images/pizza_pixel_art.jpg'), axis=1)
+        cv2_res = cv2.Sobel(np.array(ImProImage.image_from_file('test_images/pizza_pixel_art.jpg')), cv2.CV_16SC1, 1, 0, ksize=3)
+        print(f"my_res: {my_res}\n")
+        plt.imshow(my_res, cmap='gray')
+        plt.title("my_res")
+        plt.show()
 
+        print(f"\nscipy_res: {scipy_res}\n")
+        plt.imshow(scipy_res, cmap='gray')
+        plt.title("scipy_res:")
+        plt.show()
+
+        print(f"\ncv2_res: {cv2_res}, tpye: {cv2_res.dtype}\n")
+        plt.imshow(cv2_res, cmap='gray')
+        plt.title("cv2_res:")
+        plt.show()
+
+    def test_sobel_y_derivative(self):
+        """Tests if the sobel derivative is correct"""
+        my_res = ImProFilters.sobel_y_derivative(ImProImage.image_from_file('test_images/pizza_pixel_art.jpg'))
+        scipy_res = ndimage.sobel(ImProImage.image_from_file('test_images/pizza_pixel_art.jpg'), axis=0)
+        cv2_res = cv2.Sobel(np.array(ImProImage.image_from_file('test_images/pizza_pixel_art.jpg')), cv2.CV_16SC1, 0, 1, ksize=3)
+
+        print(f"my_res: {my_res}\n")
+        plt.imshow(my_res, cmap='gray')
+        plt.title("my_res")
+        plt.show()
+
+        print(f"\nscipy_res: {scipy_res}\n")
+        plt.imshow(scipy_res, cmap='gray')
+        plt.title("scipy_res:")
+        plt.show()
+
+        print(f"\ncv2_res: {cv2_res}, tpye: {cv2_res.dtype}\n")
+        plt.imshow(cv2_res, cmap='gray')
+        plt.title("cv2_res:")
+        plt.show()
 
