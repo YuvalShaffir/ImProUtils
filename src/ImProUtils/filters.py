@@ -101,19 +101,21 @@ def non_maximum_suppression(grad_matrix, phase_matrix):
             current_value = grad_matrix[i][j]
             angle = phase_matrix[i][j]
             neighbors = []
-            match angle:
-                case 0:  # 0 degrees - horizontal edge
-                    neighbors = grad_matrix[i - 1: i + 1][j]
-                    break
-                case 45:  # 45 degrees - diagonal edge
-                    neighbors = [grad_matrix[i+1][j-1], grad_matrix[i-1][j+1]]
-                    break
-                case 90:  # 90 degrees - vertical edge
-                    neighbors = grad_matrix[i][j - 1: j + 1]
-                    break
-                case 135:  # 135 degrees - diagonal edge
-                    neighbors = [grad_matrix[i - 1][j - 1], grad_matrix[i + 1][j + 1]]
-                    break
+            if angle == 0:
+                # 0 degrees - horizontal edge
+                neighbors = grad_matrix[i - 1: i + 1][j]
+
+            elif angle == 45:
+                # 45 degrees - diagonal edge
+                neighbors = [grad_matrix[i+1][j-1], grad_matrix[i-1][j+1]]
+
+            elif angle == 90:
+                # 90 degrees - vertical edge
+                neighbors = grad_matrix[i][j - 1: j + 1]
+
+            elif angle == 135 :
+                # 135 degrees - diagonal edge
+                neighbors = [grad_matrix[i - 1][j - 1], grad_matrix[i + 1][j + 1]]
 
             if current_value >= np.max(neighbors):
                 # zero out the neighbors

@@ -3,6 +3,8 @@ import numpy as np
 from PIL import Image
 import scipy.ndimage as ndimage
 import src.ImProUtils.filters as ImProFilters
+import src.ImProUtils.image as ImProImage
+import cv2
 
 
 class TestGaussianFilter(unittest.TestCase):
@@ -49,13 +51,19 @@ class TestGaussianFilter(unittest.TestCase):
 
 class TestSobel(unittest.TestCase):
     def test_correct_sobel_range(self):
-        res_x = ImProFilters.sobel_x_derivative(Image.open('test_images/pizza_pixel_art.jpg'))
-        res_y = ImProFilters.sobel_y_derivative(Image.open('test_images/pizza_pixel_art.jpg'))
+        """Tests if the sobel derivative is in the range [-255, 255]"""
+        res_x = ImProFilters.sobel_x_derivative(ImProImage.image_from_file('test_images/pizza_pixel_art.jpg'))
+        res_y = ImProFilters.sobel_y_derivative(ImProImage.image_from_file('test_images/pizza_pixel_art.jpg'))
         # check if all values are in range [-255, 255]:
         self.assertTrue(np.all(res_x >= -255) and np.all(res_x <= 255))
         self.assertTrue(np.all(res_y >= -255) and np.all(res_y <= 255))
 
-    def test_sobel_y_derivative(self):
-        pass
+    def test_sobel_x_derivative(self):
+        """Tests if the sobel derivative is correct"""
+        my_res = ImProFilters.sobel_x_derivative(ImProImage.image_from_file('test_images/pizza_pixel_art.jpg'))
+        scipy_res = ndimage.sobel(ImProImage.image_from_file('test_images/pizza_pixel_art.jpg'), axis=0)
+        cv2_res = cv2.Sobel(np.array(ImProImage.image_from_file('test_images/pizza_pixel_art.jpg')), cv2.CV_64F, 1, 0, ksize=3)
+        self.assertTrue(np.all(my_res == scipy_res))
+        self.assertTrue(np.all(my_res == cv2_res))
 
 
