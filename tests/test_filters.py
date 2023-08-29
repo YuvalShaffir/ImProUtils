@@ -100,3 +100,15 @@ class TestSobel(unittest.TestCase):
         plt.title("cv2_res:")
         plt.show()
 
+
+class TestGradient(unittest.TestCase):
+    def test_gradient_magnitude(self):
+        """Tests if the gradient magnitude is correct"""
+        pass
+
+
+class TestNonMaxSup(unittest.TestCase):
+    pass
+
+class TestHysterisis(unittest.TestCase):
+    pass
