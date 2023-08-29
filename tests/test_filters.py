@@ -8,6 +8,23 @@ import cv2
 from matplotlib import pyplot as plt
 
 
+def compare_prints(cv2_res, my_res, scipy_res):
+    if my_res is not None:
+        print(f"my_res: {my_res}\n")
+        plt.imshow(my_res, cmap='gray')
+        plt.title("my_res")
+        plt.show()
+    if scipy_res is not None:
+        print(f"\nscipy_res: {scipy_res}\n")
+        plt.imshow(scipy_res, cmap='gray')
+        plt.title("scipy_res:")
+        plt.show()
+    if cv2_res is not None:
+        print(f"\ncv2_res: {cv2_res}, tpye: {cv2_res.dtype}\n")
+        plt.imshow(cv2_res, cmap='gray')
+        plt.title("cv2_res:")
+        plt.show()
+
 class TestGaussianFilter(unittest.TestCase):
     def gaussian_filter_check(self, matrix):
         self.assertTrue(np.all(matrix >= 0))
@@ -64,20 +81,8 @@ class TestSobel(unittest.TestCase):
         my_res = ImProFilters.sobel_x_derivative(ImProImage.image_from_file('test_images/pizza_pixel_art.jpg'))
         scipy_res = ndimage.sobel(ImProImage.image_from_file('test_images/pizza_pixel_art.jpg'), axis=1)
         cv2_res = cv2.Sobel(np.array(ImProImage.image_from_file('test_images/pizza_pixel_art.jpg')), cv2.CV_16SC1, 1, 0, ksize=3)
-        print(f"my_res: {my_res}\n")
-        plt.imshow(my_res, cmap='gray')
-        plt.title("my_res")
-        plt.show()
 
-        print(f"\nscipy_res: {scipy_res}\n")
-        plt.imshow(scipy_res, cmap='gray')
-        plt.title("scipy_res:")
-        plt.show()
-
-        print(f"\ncv2_res: {cv2_res}, tpye: {cv2_res.dtype}\n")
-        plt.imshow(cv2_res, cmap='gray')
-        plt.title("cv2_res:")
-        plt.show()
+        compare_prints(cv2_res, my_res, scipy_res)
 
     def test_sobel_y_derivative(self):
         """Tests if the sobel derivative is correct"""
@@ -85,26 +90,21 @@ class TestSobel(unittest.TestCase):
         scipy_res = ndimage.sobel(ImProImage.image_from_file('test_images/pizza_pixel_art.jpg'), axis=0)
         cv2_res = cv2.Sobel(np.array(ImProImage.image_from_file('test_images/pizza_pixel_art.jpg')), cv2.CV_16SC1, 0, 1, ksize=3)
 
-        print(f"my_res: {my_res}\n")
-        plt.imshow(my_res, cmap='gray')
-        plt.title("my_res")
-        plt.show()
-
-        print(f"\nscipy_res: {scipy_res}\n")
-        plt.imshow(scipy_res, cmap='gray')
-        plt.title("scipy_res:")
-        plt.show()
-
-        print(f"\ncv2_res: {cv2_res}, tpye: {cv2_res.dtype}\n")
-        plt.imshow(cv2_res, cmap='gray')
-        plt.title("cv2_res:")
-        plt.show()
+        compare_prints(cv2_res, my_res, scipy_res)
 
 
 class TestGradient(unittest.TestCase):
     def test_gradient_magnitude(self):
         """Tests if the gradient magnitude is correct"""
-        pass
+        sobel_x = ImProFilters.sobel_x_derivative(ImProImage.image_from_file('test_images/pizza_pixel_art.jpg'))
+        sobel_y = ImProFilters.sobel_y_derivative(ImProImage.image_from_file('test_images/pizza_pixel_art.jpg'))
+        my_res = ImProFilters.gradient_magnitude(sobel_x, sobel_y)
+        scipy_res = ndimage.gaussian_gradient_magnitude(ImProImage.image_from_file('test_images/pizza_pixel_art.jpg'), sigma=1)
+
+        compare_prints(None, my_res, scipy_res)
+
+
+
 
 
 class TestNonMaxSup(unittest.TestCase):

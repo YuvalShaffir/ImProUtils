@@ -62,7 +62,7 @@ def sobel_x_derivative(img):
         img = color.rgb2gray(img)
 
     sobel_x_kernel = np.outer(np.array([1, 2, 1]), np.array([1, 0, -1]))
-    sobel_x = signal.convolve(sobel_x_kernel, img, mode='full').astype(np.float8)
+    sobel_x = signal.convolve(sobel_x_kernel, img, mode='full').astype(np.float16)
     return sobel_x
 
 
