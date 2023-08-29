@@ -103,8 +103,9 @@ class TestGradient(unittest.TestCase):
 
         compare_prints(None, my_res, scipy_res)
 
-
-
+    def test_gradient_direction(self):
+        """Tests if the gradient direction is correct"""
+        pass
 
 
 class TestNonMaxSup(unittest.TestCase):
