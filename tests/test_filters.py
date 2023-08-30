@@ -112,7 +112,7 @@ class TestGradient(unittest.TestCase):
         grad_x = ImProFilters.sobel_x_derivative(ImProImage.image_from_file('test_images/pizza_pixel_art.jpg'))
         grad_y = ImProFilters.sobel_y_derivative(ImProImage.image_from_file('test_images/pizza_pixel_art.jpg'))
         res = ImProFilters.gradient_direction(grad_x, grad_y)
-        print(f"res: {res}")
+
         # check if all values are in range [0, 180]:
         self.assertTrue(np.all(res >= 0) and np.all(res <= 180))
 
@@ -127,7 +127,7 @@ class TestGradient(unittest.TestCase):
                                [90, 45, 90]])
 
         my_res = ImProFilters.direction_quantization(input_mat)
-        # print(f"my_res: {my_res}, type: {my_res.dtype}")
+
         self.assertTrue(np.all(my_res == output_mat))
 
     def test_direction_quantization2(self):
@@ -141,7 +141,7 @@ class TestGradient(unittest.TestCase):
                                [90, 45, 90]])
 
         my_res = ImProFilters.direction_quantization(input_mat)
-        print(f"my_res: {my_res}, type: {my_res.dtype}")
+
         self.assertTrue(np.all(my_res == output_mat))
 
 
