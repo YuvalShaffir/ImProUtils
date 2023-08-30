@@ -25,6 +25,7 @@ def compare_prints(cv2_res, my_res, scipy_res):
         plt.title("cv2_res:")
         plt.show()
 
+
 class TestGaussianFilter(unittest.TestCase):
     def gaussian_filter_check(self, matrix):
         self.assertTrue(np.all(matrix >= 0))
@@ -80,7 +81,8 @@ class TestSobel(unittest.TestCase):
         """Tests if the sobel derivative is correct"""
         my_res = ImProFilters.sobel_x_derivative(ImProImage.image_from_file('test_images/pizza_pixel_art.jpg'))
         scipy_res = ndimage.sobel(ImProImage.image_from_file('test_images/pizza_pixel_art.jpg'), axis=1)
-        cv2_res = cv2.Sobel(np.array(ImProImage.image_from_file('test_images/pizza_pixel_art.jpg')), cv2.CV_16SC1, 1, 0, ksize=3)
+        cv2_res = cv2.Sobel(np.array(ImProImage.image_from_file('test_images/pizza_pixel_art.jpg')), cv2.CV_16SC1, 1, 0,
+                            ksize=3)
 
         compare_prints(cv2_res, my_res, scipy_res)
 
@@ -88,7 +90,8 @@ class TestSobel(unittest.TestCase):
         """Tests if the sobel derivative is correct"""
         my_res = ImProFilters.sobel_y_derivative(ImProImage.image_from_file('test_images/pizza_pixel_art.jpg'))
         scipy_res = ndimage.sobel(ImProImage.image_from_file('test_images/pizza_pixel_art.jpg'), axis=0)
-        cv2_res = cv2.Sobel(np.array(ImProImage.image_from_file('test_images/pizza_pixel_art.jpg')), cv2.CV_16SC1, 0, 1, ksize=3)
+        cv2_res = cv2.Sobel(np.array(ImProImage.image_from_file('test_images/pizza_pixel_art.jpg')), cv2.CV_16SC1, 0, 1,
+                            ksize=3)
 
         compare_prints(cv2_res, my_res, scipy_res)
 
@@ -99,25 +102,48 @@ class TestGradient(unittest.TestCase):
         sobel_x = ImProFilters.sobel_x_derivative(ImProImage.image_from_file('test_images/pizza_pixel_art.jpg'))
         sobel_y = ImProFilters.sobel_y_derivative(ImProImage.image_from_file('test_images/pizza_pixel_art.jpg'))
         my_res = ImProFilters.gradient_magnitude(sobel_x, sobel_y)
-        scipy_res = ndimage.gaussian_gradient_magnitude(ImProImage.image_from_file('test_images/pizza_pixel_art.jpg'), sigma=1)
+        scipy_res = ndimage.gaussian_gradient_magnitude(ImProImage.image_from_file('test_images/pizza_pixel_art.jpg'),
+                                                        sigma=1)
 
         compare_prints(None, my_res, scipy_res)
 
     def test_gradient_direction(self):
-        """Tests if the gradient direction is correct"""
-        pass
+        """Tests if the gradient direction returns values within the range [0, 180]"""
+        grad_x = ImProFilters.sobel_x_derivative(ImProImage.image_from_file('test_images/pizza_pixel_art.jpg'))
+        grad_y = ImProFilters.sobel_y_derivative(ImProImage.image_from_file('test_images/pizza_pixel_art.jpg'))
+        res = ImProFilters.gradient_direction(grad_x, grad_y)
+        print(f"res: {res}")
+        # check if all values are in range [0, 180]:
+        self.assertTrue(np.all(res >= 0) and np.all(res <= 180))
 
-    def test_direction_quantization(self):
+    def test_direction_quantization1(self):
         """Tests if the gradient direction is correctly quantized"""
-        input = np.array([[20, 110, 70],
-                          [160, 40, 130],
-                          [90, 25, 75]])
-        output = np.array([[0, 90, 45],
-                           [135, 0, 90],
-                           [90, 0, 45]]).astype(np.uint8)
-        my_res = ImProFilters.direction_quantization(input)
+        input_mat = np.array([[20, 110, 70],
+                              [160, 40, 130],
+                              [90, 25, 75]])
+
+        output_mat = np.array([[0, 90, 90],
+                               [180, 45, 135],
+                               [90, 45, 90]])
+
+        my_res = ImProFilters.direction_quantization(input_mat)
+        # print(f"my_res: {my_res}, type: {my_res.dtype}")
+        self.assertTrue(np.all(my_res == output_mat))
+
+    def test_direction_quantization2(self):
+        """Tests if the gradient direction is correctly quantized"""
+        input_mat = np.array([[22.4, 67.5, 70],
+                              [160, 40, 130],
+                              [90, 25, 75]])
+
+        output_mat = np.array([[0, 90, 90],
+                               [180, 45, 135],
+                               [90, 45, 90]])
+
+        my_res = ImProFilters.direction_quantization(input_mat)
         print(f"my_res: {my_res}, type: {my_res.dtype}")
-        self.assertTrue(np.all(my_res == output))
+        self.assertTrue(np.all(my_res == output_mat))
+
 
 
 class TestNonMaxSup(unittest.TestCase):

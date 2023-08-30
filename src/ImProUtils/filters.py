@@ -79,22 +79,35 @@ def sobel_y_derivative(img):
 
 def gradient_magnitude(grad_x, grad_y):
     """Returns the gradient magnitude of the image using the x and y derivatives."""
+    # validate input:
+    if grad_x.shape != grad_y.shape:
+        raise ValueError(SAME_SHAPE_ERR)
+
     return np.sqrt(grad_x ** 2 + grad_y ** 2)
 
 
 def gradient_direction(grad_x, grad_y):
     """Returns the gradient direction of the image using the x and y derivatives."""
-    return np.arctan2(grad_y, grad_x)
+    if grad_x.shape != grad_y.shape:
+        raise ValueError(SAME_SHAPE_ERR)
+
+    res = np.arctan2(grad_y, grad_x).astype(np.float16) * 180 / np.pi
+    res[np.where(res < 0)] += 180
+    return res
 
 
 def direction_quantization(directions):
     """Returns the quantized direction of the image using the gradient direction."""
+    inner_bins = np.array([0, 22.5, 45, 67.5, 90, 112.5, 135, 157.5, 180])
     bins = np.array([0, 45, 90, 135, 180])
     # for each value in the directions array, find the bin it belongs to (index in the bins array)
-    bin_indices = np.digitize(directions, bins)
+    inner_bin_indices = np.digitize(directions, inner_bins, right=False)
+
+    bin_indices = np.digitize(inner_bins[inner_bin_indices], bins, right=False)
 
     # for each cell in the membership matrix (i, j) set the value to the bin value
-    return bins[bin_indices]
+    # The -1 is because the digitize returns out of bounds indices
+    return bins[bin_indices-1]
 
 
 def non_maximum_suppression(grad_matrix, phase_matrix):
