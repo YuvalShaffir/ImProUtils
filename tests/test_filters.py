@@ -107,9 +107,22 @@ class TestGradient(unittest.TestCase):
         """Tests if the gradient direction is correct"""
         pass
 
+    def test_direction_quantization(self):
+        """Tests if the gradient direction is correctly quantized"""
+        input = np.array([[20, 110, 70],
+                          [160, 40, 130],
+                          [90, 25, 75]])
+        output = np.array([[0, 90, 45],
+                           [135, 0, 90],
+                           [90, 0, 45]]).astype(np.uint8)
+        my_res = ImProFilters.direction_quantization(input)
+        print(f"my_res: {my_res}, type: {my_res.dtype}")
+        self.assertTrue(np.all(my_res == output))
+
 
 class TestNonMaxSup(unittest.TestCase):
     pass
+
 
 class TestHysterisis(unittest.TestCase):
     pass

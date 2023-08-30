@@ -91,9 +91,10 @@ def direction_quantization(directions):
     """Returns the quantized direction of the image using the gradient direction."""
     bins = np.array([0, 45, 90, 135, 180])
     # for each value in the directions array, find the bin it belongs to (index in the bins array)
-    bin_membership_matrix = np.digitize(directions, bins)
+    bin_indices = np.digitize(directions, bins)
+
     # for each cell in the membership matrix (i, j) set the value to the bin value
-    return bins[bin_membership_matrix]
+    return bins[bin_indices]
 
 
 def non_maximum_suppression(grad_matrix, phase_matrix):
