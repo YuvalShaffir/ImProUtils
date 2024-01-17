@@ -1,9 +1,8 @@
 
 ![ImgProUtils](https://github.com/YuvalShaffir/ImProUtils/assets/34415892/592d6f76-344d-4074-b84e-511362b2d15e)
 
-
-Author
-Yuval Shaffir
+This is an image-processing utility library that I created to boost my future projects and also dive deep into many image-processing subjects.
+You are welcome to use it also :)
 
 
 
