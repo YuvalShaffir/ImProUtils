@@ -1,9 +1,11 @@
 
 ![ImgProUtils](https://github.com/YuvalShaffir/ImProUtils/assets/34415892/592d6f76-344d-4074-b84e-511362b2d15e)
 
-This is an image-processing utility library that I created to boost my future projects and also dive deep into many image-processing subjects.
-You are welcome to use it also :)
+The most impactful course I've undertaken during my university journey is undoubtedly the Image Processing course. 
+It wasn't the ease of the exams that made it stand out; in fact, it was one of the most challenging courses. Its significance lies in its inherent interest to me and the profound impact it had on redirecting my career path.
 
+Motivated by my passion for the subject, I crafted this utility library to serve as a valuable resource for my upcoming projects in the realm of Image Processing. 
+Beyond aiding in future endeavors, the library serves as a tool for delving deep into both the concepts I've already learned and those I aspire to explore further.
 
 
 # ImProUtils.image.image
